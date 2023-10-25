@@ -1,4 +1,6 @@
-Product.create({ name: "Lord of the Rings", price: 20, image_url: "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_.jpg", description: "Fantasy fiction" })
+Product.create({ name: "Lord of the Rings, the Fellowship of the Ring", price: 20, image_url: "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_.jpg", description: "Fantasy fiction" })
+Product.create({ name: "Lord of the Rings, the Two Towers", price: 22, image_url: "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_.jpg", description: "Fantasy fiction" })
+Product.create({ name: "Lord of the Rings, the Return of the King", price: 21, image_url: "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_.jpg", description: "Fantasy fiction" })
 
 Product.create({ name: "The Conjuring", price: 25, image_url: "https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_.jpg", description: "Horror" })
 
