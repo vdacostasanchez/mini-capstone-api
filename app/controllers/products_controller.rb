@@ -1,12 +1,11 @@
 class ProductsController < ApplicationController
   def all_products
-    movies = Product.all
-    render json: movies.as_json
+    @products = Product.all
+    render template: "products/index"
   end
 
-  def random_movie
-    index = rand(1..3)
-    movie = Product.find(index)
-    render json: movie.as_json
+  def one_product
+    @product = Product.find_by(name: params["name"])
+    render template: "products/show"
   end
 end
