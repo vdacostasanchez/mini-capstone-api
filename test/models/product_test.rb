@@ -6,7 +6,7 @@ class ProductTest < ActiveSupport::TestCase
     assert_equal false, product.is_discounted?
 
     product = Product.new(price: 1)
-    assert_equal true, product.is_discounted
+    assert_equal true, product.is_discounted?
   end
 
   test "tax" do
@@ -15,5 +15,7 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "total" do
-    
+    product = Product.new(price: 100)
+    assert_in_delta 109, product.total
+  end
 end
