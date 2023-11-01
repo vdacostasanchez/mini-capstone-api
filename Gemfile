@@ -72,3 +72,5 @@ end
 
 #Allows different domains that can use our applications
 gem "rack-cors"
+
+gem "seed_dump"

@@ -19,7 +19,11 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "create" do
     assert_difference "Product.count", 1 do
-      post "/products.json", params: { name: "Back to the Future", price: 19, image_url: "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg", description: "Marty McFly, a 17-year-old high school student, is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend, the maverick scientist Doc Brown." }
+      post "/products.json", params: { name: "Test", price: 19, image_url: "test.jpg", description: "test description" }
+    end
+    assert_difference "Product.count", 0 do
+      post "/products.json", params: {}
+      assert_response 422
     end
   end
 
@@ -30,6 +34,12 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
     data = JSON.parse(response.body)
     assert_equal "Updated name", data["name"]
+    assert_equal product.price, data["price"].to_i
+    assert_equal product.image_url, data["image_url"]
+    assert_equal product.description, data["description"]
+
+    patch "/products/#{product.id}.json", params: { name: "" }
+    assert_response 422
   end
 
   test "destroy" do
