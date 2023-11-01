@@ -15,6 +15,7 @@ class ProductsController < ApplicationController
       price: params["price"],
       image_url: params["image_url"],
       description: params["description"],
+      supplier_id: params["supplier_id"],
     )
     if @product.valid?
       render :show

@@ -5,9 +5,11 @@ one:
   price: 1
   image_url: MyString.png
   description: this is the first movie
+  supplier: one
 
 two:
   name: movie2
   price: 1
   image_url: MyString.png
   description: this is the second movie
+  supplier: two
