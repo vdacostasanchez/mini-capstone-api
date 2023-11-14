@@ -1,8 +1,7 @@
-Supplier.create!([
-  { name: "A24", email: "a24@test.com", phone_number: "987-766-4657" },
-  { name: "Disney", email: "disney@test.com", phone_number: "987-766-4657" },
-  { name: "Warner Bros", email: "wbros@test.com", phone_number: "976-354-8224" },
-])
+supplier1 = Supplier.create!({ name: "A24", email: "a24@test.com", phone_number: "987-766-4657" })
+supplier2 = Supplier.create!({ name: "Disney", email: "disney@test.com", phone_number: "987-766-4657" })
+supplier3 = Supplier.create!({ name: "Warner Bros", email: "wbros@test.com", phone_number: "976-354-8224" })
+
 Product.create!([
   { name: "The Conjuring", price: "25.0", image_url: nil, description: "Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse.", inventory: 35, supplier_id: 1 },
   { name: "Inside Out", price: "15.0", image_url: nil, description: "After young Riley is uprooted from her Midwest life and moved to San Francisco, her emotions - Joy, Fear, Anger, Disgust, and Sadness - conflict on how best to navigate a new city, house, and school.", inventory: 64, supplier_id: 2 },
