@@ -4,16 +4,18 @@ class OrdersController < ApplicationController
       user_id: current_user.id,
       product_id: params["product_id"],
       quantity: params["quantity"],
-      subtotal: params["subtotal"],
-      tax: params["tax"],
-      total: params["total"],
     )
+
     render json: "Order created successfully"
   end
 
   def show
-    @order = Order.find_by(id: params["id"])
-    render template: "orders/show"
+    if current_user.id
+      @order = Order.find_by(id: params["id"])
+      render template: "orders/show"
+    else
+      render json: { errors: @product.errors.full_messages }, status: 422
+    end
   end
 
   def index
