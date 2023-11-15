@@ -19,7 +19,11 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.all
-    render template: "orders/index"
+    if current_user
+      @orders = Order.all
+      render template: "orders/index"
+    else
+      render json: { errors: @product.errors.full_messages }, status: 422
+    end
   end
 end
