@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
     @products = Product.all
     render template: "products/index"
@@ -10,17 +12,19 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.create(
-      name: params["name"],
-      price: params["price"],
-      description: params["description"],
-      supplier_id: params["supplier_id"],
-    )
-    if @product.valid?
-      Image.create(url: params[:image_url], product_id: @product.id)
-      render :show
-    else
-      render json: { errors: @product.errors.full_messages }, status: 422
+    if current_user
+      @product = Product.create(
+        name: params["name"],
+        price: params["price"],
+        description: params["description"],
+        supplier_id: params["supplier_id"],
+      )
+      if @product.valid?
+        Image.create(url: params[:image_url], product_id: @product.id)
+        render :show
+      else
+        render json: { errors: @product.errors.full_messages }, status: 422
+      end
     end
   end
 
