@@ -2,20 +2,18 @@ class OrdersController < ApplicationController
   before_action :authenticate_user
 
   def create
-    @product = Product.find_by(id: params["product_id"])
-    subtotal_amount = @product.price * params["quantity"].to_i
-    tax_amount = subtotal_amount * 0.9
-    total_amount = subtotal_amount + tax_amount
-
+    @carted_products = current_user.carted_products.where(status: "carted")
+    total_amount = 0
+    @carted_products.map do |carted_product|
+      subtotal_amount = carted_product[:price].to_i * carted_product[:quantity].to_i
+      tax_amount = subtotal_amount * 0.9
+      total_amount += (subtotal_amount + tax_amount)
+    end
     @order = Order.create(
       user_id: current_user.id,
-      product_id: params["product_id"],
-      quantity: params["quantity"],
-      subtotal: subtotal_amount,
-      tax: tax_amount,
       total: total_amount,
     )
-    render json: "Order created successfully"
+    render :show
   end
 
   def show
