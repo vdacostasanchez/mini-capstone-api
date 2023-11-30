@@ -3,20 +3,19 @@ class Order < ApplicationRecord
   has_many :carted_products
   has_many :products, through: :carted_products
 
-  # def subtotal
-  #   subtotal_amount = quantity.to_i * Product.find(product_id).price
-  #   subtotal_amount
-  # end
-
-  # def tax
-  #   tax_amount = (quantity.to_i * Product.find(product_id).price) * 0.09
-  #   tax_amount
-  # end
-
-  # def total
-  #   subtotal_amount = quantity.to_i * Product.find(product_id).price
-  #   tax_amount = (quantity.to_i * Product.find(product_id).price) * 0.09
-  #   total_price = tax + subtotal
-  #   total_price
-  # end
+  def update_total
+    subtotal_amount = 0
+    carted_products.each do |carted_product|
+      subtotal_amount = carted_product.product.price * carted_product.quantity
+    end
+    tax_amount = subtotal_amount * 0.9
+    total_amount = (subtotal_amount + tax_amount)
+    @order = Order.create(
+      user_id: current_user.id,
+      subtotal: subtotal_amount,
+      tax: tax_amount,
+      total: total_amount,
+    )
+    self.
+  end
 end

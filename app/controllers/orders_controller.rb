@@ -2,21 +2,10 @@ class OrdersController < ApplicationController
   before_action :authenticate_user
 
   def create
-    @carted_products = current_user.carted_products.where(status: "carted")
-    subtotal_amount = 0
-    @carted_products.each do |carted_product|
-      subtotal_amount = carted_product.product.price * carted_product.quantity
-    end
-    tax_amount = subtotal_amount * 0.9
-    total_amount = (subtotal_amount + tax_amount)
-    @order = Order.create(
-      user_id: current_user.id,
-      subtotal: subtotal_amount,
-      tax: tax_amount,
-      total: total_amount,
-    )
+    carted_products = current_user.carted_products.where(status: "carted")
+
     if @order.valid?
-      @carted_product.update_all(status: "purchased", order_id: @order.id)
+      carted_product.update_all(status: "purchased", order_id: @order.id)
       render :show
     else
       render json: { errors: @order.errors.full_messages }, status: 422
