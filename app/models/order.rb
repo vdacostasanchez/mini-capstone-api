@@ -10,12 +10,10 @@ class Order < ApplicationRecord
     end
     tax_amount = subtotal_amount * 0.9
     total_amount = (subtotal_amount + tax_amount)
-    @order = Order.create(
-      user_id: current_user.id,
-      subtotal: subtotal_amount,
-      tax: tax_amount,
-      total: total_amount,
-    )
-    self.
+
+    self.subtotal = subtotal_amount
+    self.tax = tax_amount
+    self.total = total_amount
+    self.save
   end
 end
