@@ -1,4 +1,6 @@
 class CartedProductsController < ApplicationController
+  before_action :authenticate_user
+
   def create
     if current_user
       @carted_product = CartedProduct.create(
@@ -17,18 +19,12 @@ class CartedProductsController < ApplicationController
   end
 
   def index
-    if current_user
-      @carted_products = CartedProduct.all
-      if params[:status]
-        status = CartedProduct.where(status: params[:status])
-        @carted_products = status
-      end
-      render :index
-    end
+    @carted_products = current_user.carted_products.where(status: "carted")
+    render :index
   end
 
   def destroy
-    carted_product = current_user.carted_product.find_by(id: params[:id], status: "carted")
+    carted_product = current_user.carted_products.find_by(id: params[:id], status: "carted")
     carted_product.update(status: "removed")
     render json: { status: "Carted item removed" }
   end
