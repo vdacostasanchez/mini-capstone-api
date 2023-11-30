@@ -8,7 +8,11 @@ class CartedProductsController < ApplicationController
         order_id: nil,
         status: "carted",
       )
-      render :show
+      if @carted_product.valid?
+        render :show
+      else
+        render json: { errors: @carted_product.errors.full_messages }
+      end
     end
   end
 
@@ -21,5 +25,11 @@ class CartedProductsController < ApplicationController
       end
       render :index
     end
+  end
+
+  def destroy
+    carted_product = current_user.carted_product.find_by(id: params[:id], status: "carted")
+    carted_product.update(status: "removed")
+    render json: { status: "Carted item removed" }
   end
 end

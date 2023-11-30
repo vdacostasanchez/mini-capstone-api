@@ -3,17 +3,24 @@ class OrdersController < ApplicationController
 
   def create
     @carted_products = current_user.carted_products.where(status: "carted")
-    total_amount = 0
-    @carted_products.map do |carted_product|
-      subtotal_amount = carted_product[:price].to_i * carted_product[:quantity].to_i
-      tax_amount = subtotal_amount * 0.9
-      total_amount += (subtotal_amount + tax_amount)
+    subtotal_amount = 0
+    @carted_products.each do |carted_product|
+      subtotal_amount = carted_product.product.price * carted_product.quantity
     end
+    tax_amount = subtotal_amount * 0.9
+    total_amount = (subtotal_amount + tax_amount)
     @order = Order.create(
       user_id: current_user.id,
+      subtotal: subtotal_amount,
+      tax: tax_amount,
       total: total_amount,
     )
-    render :show
+    if @order.valid?
+      @carted_product.update_all(status: "purchased", order_id: @order.id)
+      render :show
+    else
+      render json: { errors: @order.errors.full_messages }, status: 422
+    end
   end
 
   def show
